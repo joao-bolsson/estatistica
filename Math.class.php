@@ -41,7 +41,7 @@ class Math {
         return $p;
     }
 
-    public static function getSxy(array $x, array $y):float {
+    public static function getSxy(array $x, array $y): float {
         if (count($x) !== count($y)) {
             echo "BASE DE DADOS COM TAMANHO DIFERENTE";
             return 0; // erro
@@ -61,7 +61,7 @@ class Math {
         return $Sxy;
     }
 
-    public static function getSxx(array $x):float {
+    public static function getSxx(array $x): float {
         $n = count($x);
         $Sxx = 0;
         for ($i = 0; $i < $n; $i++) {
@@ -88,25 +88,40 @@ class Math {
             echo "ARRAYS COM TAMANHOS DIFERENTES";
             return 0; // erro
         }
-        $medY = 0;
-        $n = count($Y);
-        for ($i = 0; $i < $n; $i++) {
-            $medY += floatval($Y[$i]);
-        }
-        $medY /= $n;
+        $medY = self::getMedia($Y);
+        $medX = self::getMedia($x);
 
-        $medX = 0;
-        for ($i = 0; $i < $n; $i++) {
-            $medX += floatval($x[$i]);
-        }
-        $medX /= $n;
-
-        $b1 = self::getSxy($x, $Y) / self::getSxx($x);
+        $b1 = self::getB1($x, $Y);
         $b0 = $medY - $b1 * $medX;
 
         $uYI = floatval($b0 + $b1 * $x[$index]);
 
         return $uYI;
+    }
+
+    public static function getB1(array $x, array $Y): float {
+        $b1 = self::getSxy($x, $Y) / self::getSxx($x);
+        return $b1;
+    }
+
+    public static function getMedia(array $v): float {
+        $med = 0;
+        $n = count($v);
+        for ($i = 0; $i < $n; $i++) {
+            $med += floatval($v[$i]);
+        }
+        $med /= $n;
+
+        return $med;
+    }
+
+    public static function getB0($x, $Y): float {
+        $medY = self::getMedia($Y);
+        $medX = self::getMedia($x);
+        $b1 = self::getB1($x, $Y);
+        $b0 = $medY - $b1 * $medX;
+
+        return $b0;
     }
 
 }
