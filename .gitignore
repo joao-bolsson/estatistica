@@ -1,0 +1,9 @@
+/nbproject/private/
+/node_modules/
+.idea/
+/log/
+*.ini
+/toImport/
+/temp/
+/comprovantes/
+/admin/buildsql.php
