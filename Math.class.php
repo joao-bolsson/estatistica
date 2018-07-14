@@ -58,4 +58,10 @@ class Math {
         return $p;
     }
 
+    public static function testeHipoteseCorrelacao(float $p, int $n): float {
+        $T0 = floatval($p * sqrt(floatval($n - 2)) / sqrt(floatval(1 - pow($p, 2))));
+
+        return $T0;
+    }
+
 }
