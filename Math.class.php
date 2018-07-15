@@ -8,7 +8,23 @@
 
 class Math {
 
-    public static function interpretaCoPearson(float $p):string {
+    private $Sxx, $Sxy, $Syy;
+    private $x, $y;
+
+    public function __construct(array $x, array $y) {
+        $this->x = $x;
+        $this->y = $y;
+        // Sxx
+        $this->Sxx = self::getSxx($x);
+
+        // Syy
+        $this->Syy = self::getSyy($y);
+
+        // Sxy
+        $this->Sxy = self::getSxy($x, $y);
+    }
+
+    public static function interpretaCoPearson(float $p): string {
         $s = "Correlação perfeita positiva";
 
         if ($p == -1) {
@@ -23,20 +39,16 @@ class Math {
         return $s;
     }
 
-    public static function coPearson(array $x, array $y): float {
-        $Sxx = $Syy = $Sxy = 0.0;
+    public function coPearson(): float {
+        // estimador
+        $p = $this->Sxy / sqrt(floatval($this->Sxx * $this->Syy));
 
-        if (count($x) !== count($y)) {
-            echo "BASE DE DADOS COM TAMANHO DIFERENTE";
-            return 0; // erro
-        }
+        return round($p, 2);
+    }
 
-        $n = count($x);
-
-        // Sxx
-        $Sxx = self::getSxx($x);
-
-        // Syy
+    public static function getSyy(array $y): float {
+        $Syy = 0;
+        $n = count($y);
         for ($i = 0; $i < $n; $i++) {
             $sum = 0;
 
@@ -47,13 +59,7 @@ class Math {
             $Syy += floatval(pow($y[$i], 2) - (pow($sum, 2) / $n));
         }
 
-        // Sxy
-        $Sxy = self::getSxy($x, $y);
-
-        // estimador
-        $p = $Sxy / sqrt(floatval($Sxx * $Syy));
-
-        return round($p, 2);
+        return $Syy;
     }
 
     public static function getSxy(array $x, array $y): float {
@@ -98,24 +104,20 @@ class Math {
         return abs($T0);
     }
 
-    public static function estimadorMinQuad(array $Y, array $x, int $index): float {
-        if (count($Y) !== count($x)) {
-            echo "ARRAYS COM TAMANHOS DIFERENTES";
-            return 0; // erro
-        }
-        $medY = self::getMedia($Y);
-        $medX = self::getMedia($x);
+    public function estimadorMinQuad(int $index): float {
+        $medY = self::getMedia($this->y);
+        $medX = self::getMedia($this->x);
 
-        $b1 = self::getB1($x, $Y);
+        $b1 = $this->getB1();
         $b0 = $medY - $b1 * $medX;
 
-        $uYI = floatval($b0 + $b1 * $x[$index]);
+        $uYI = floatval($b0 + $b1 * $this->x[$index]);
 
         return $uYI;
     }
 
-    public static function getB1(array $x, array $Y): float {
-        $b1 = self::getSxy($x, $Y) / self::getSxx($x);
+    public function getB1(): float {
+        $b1 = $this->Sxy / $this->Sxx;
         return $b1;
     }
 
@@ -130,35 +132,30 @@ class Math {
         return $med;
     }
 
-    public static function getB0($x, $Y): float {
-        $medY = self::getMedia($Y);
-        $medX = self::getMedia($x);
-        $b1 = self::getB1($x, $Y);
+    public function getB0(): float {
+        $medY = self::getMedia($this->y);
+        $medX = self::getMedia($this->x);
+        $b1 = $this->getB1();
         $b0 = $medY - $b1 * $medX;
 
         return $b0;
     }
 
-    public static function estimativaVariancia(array $x, array $y): float {
-        if (count($y) !== count($x)) {
-            echo "ARRAYS COM TAMANHOS DIFERENTES";
-            return 0; // erro
-        }
-        $n = count($x);
+    public function estimativaVariancia(): float {
+        $n = count($this->x);
 
         $sum = 0;
         for ($i = 0; $i < $n; $i++) {
-            $sum += floatval(pow($y[$i] - self::estimadorMinQuad($y, $x, $i), 2));
+            $sum += floatval(pow($this->y[$i] - $this->estimadorMinQuad($i), 2));
         }
         $est = (1 / ($n - 2)) * $sum;
         return $est;
     }
 
-    public static function testeHipoteseRegressao($x, $y): float {
-        $b1 = self::getB1($x, $y);
-        $est = self::estimativaVariancia($x, $y);
-        $sxx = self::getSxx($x);
-        $t0 = $b1 / sqrt($est / $sxx);
+    public function testeHipoteseRegressao(): float {
+        $b1 = $this->getB1();
+        $est = $this->estimativaVariancia();
+        $t0 = $b1 / sqrt($est / $this->sxx);
         return abs($t0);
     }
 

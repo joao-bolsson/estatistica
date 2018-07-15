@@ -29,16 +29,18 @@ for ($i = 1; $i < $size; $i++) {
 // BANCO 1
 echo "=================<br>1) <br>";
 
-$p = Math::coPearson($x, $y);
+$math = new Math($x, $y);
+
+$p = $math->coPearson();
 echo "p: " . $p . " -> " . Math::interpretaCoPearson($p) . "<br>";
 
 echo "=================<br>2) <br>";
 
-$b0 = Math::getB0($x, $y);
-$b1 = Math::getB1($x, $y);
+$b0 = $math->getB0();
+$b1 = $math->getB1();
 
-$teste = Math::testeHipoteseRegressao($x, $y);
-echo "b0: " . $b0 . " | b1: " . $b1 . " | t0 (teste de hipotese): " . $teste."<br>";
+$teste = $math->testeHipoteseRegressao();
+echo "b0: " . $b0 . " | b1: " . $b1 . " | t0 (teste de hipotese): " . $teste . "<br>";
 
 // BANCO 2
 $array = File::readFile('ex2.csv');
@@ -58,9 +60,17 @@ for ($i = 1; $i < $size; $i++) {
     }
 }
 
+$math = new Math($x, $y);
+
 echo "=================<br>5) <br>";
-$p = Math::coPearson($x, $y);
+$p = $math->coPearson();
 echo "p: " . $p . " -> " . Math::interpretaCoPearson($p) . "<br>";
 
+echo "=================<br>6) <br>";
 
+$b0 = $math->getB0();
+$b1 = $math->getB1();
+
+$teste = $math->testeHipoteseRegressao();
+echo "b0: " . $b0 . " | b1: " . $b1 . " | t0 (teste de hipotese): " . $teste . "<br>";
 
