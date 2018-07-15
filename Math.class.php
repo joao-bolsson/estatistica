@@ -80,7 +80,7 @@ class Math {
     public static function testeHipoteseCorrelacao(float $p, int $n): float {
         $T0 = floatval($p * sqrt(floatval($n - 2)) / sqrt(floatval(1 - pow($p, 2))));
 
-        return $T0;
+        return abs($T0);
     }
 
     public static function estimadorMinQuad(array $Y, array $x, int $index): float {
@@ -124,7 +124,7 @@ class Math {
         return $b0;
     }
 
-    public static function estimativaVariancia(array $x, array $y) {
+    public static function estimativaVariancia(array $x, array $y): float {
         if (count($y) !== count($x)) {
             echo "ARRAYS COM TAMANHOS DIFERENTES";
             return 0; // erro
@@ -137,6 +137,14 @@ class Math {
         }
         $est = (1 / ($n - 2)) * $sum;
         return $est;
+    }
+
+    public static function testeHipoteseRegressao($x, $y): float {
+        $b1 = self::getB1($x, $y);
+        $est = self::estimativaVariancia($x, $y);
+        $sxx = self::getSxx($x);
+        $t0 = $b1 / sqrt($est / $sxx);
+        return abs($t0);
     }
 
 }
