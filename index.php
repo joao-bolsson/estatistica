@@ -24,9 +24,9 @@ for ($i = 1; $i < $size; $i++) {
         $y[$index] = $line[1]; // retorno
         $index++;
     }
-
 }
 
+// BANCO 1
 echo "=================<br>1) <br>";
 
 $p = Math::coPearson($x, $y);
@@ -39,6 +39,28 @@ $b1 = Math::getB1($x, $y);
 
 $teste = Math::testeHipoteseRegressao($x, $y);
 echo "b0: " . $b0 . " | b1: " . $b1 . " | t0 (teste de hipotese): " . $teste."<br>";
+
+// BANCO 2
+$array = File::readFile('ex2.csv');
+$size = count($array);
+
+$x = [];
+$y = [];
+$index = 0;
+for ($i = 1; $i < $size; $i++) {
+    $line = $array[$i];
+
+    $n = count($line);
+    for ($j = 0; $j < $n; $j++) {
+        $x[$index] = $line[0]; // quilometragem
+        $y[$index] = $line[1]; // litros
+        $index++;
+    }
+}
+
+echo "=================<br>5) <br>";
+$p = Math::coPearson($x, $y);
+echo "p: " . $p . " -> " . Math::interpretaCoPearson($p) . "<br>";
 
 
 

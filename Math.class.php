@@ -8,7 +8,7 @@
 
 class Math {
 
-    public static function interpretaCoPearson($p):string {
+    public static function interpretaCoPearson(float $p):string {
         $s = "Correlação perfeita positiva";
 
         if ($p == -1) {
@@ -53,7 +53,7 @@ class Math {
         // estimador
         $p = $Sxy / sqrt(floatval($Sxx * $Syy));
 
-        return $p;
+        return round($p, 2);
     }
 
     public static function getSxy(array $x, array $y): float {
