@@ -37,6 +37,8 @@ echo "=================<br>2) <br>";
 $b0 = Math::getB0($x, $y);
 $b1 = Math::getB1($x, $y);
 
-echo "b0: " . $b0 . " | b1: " . $b1 . "<br>";
+$teste = Math::testeHipoteseRegressao($x, $y);
+echo "b0: " . $b0 . " | b1: " . $b1 . " | t0 (teste de hipotese): " . $teste."<br>";
+
 
 
