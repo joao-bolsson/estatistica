@@ -27,3 +27,9 @@ for ($i = 1; $i < $size; $i++) {
 
 }
 
+echo "=================<br>1) <br>";
+
+$p = Math::coPearson($x, $y);
+echo "p: " . $p . " -> " . Math::interpretaCoPearson($p);
+
+

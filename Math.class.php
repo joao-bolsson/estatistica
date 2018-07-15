@@ -8,6 +8,21 @@
 
 class Math {
 
+    public static function interpretaCoPearson($p):string {
+        $s = "Correlação perfeita positiva";
+
+        if ($p == -1) {
+            $s = "Correlação perfeita negativa";
+        } else if ($p > -1 && $p < 0) {
+            $s = "Correlação negativa";
+        } else if ($p == 0) {
+            $s = "Correlação nula";
+        } else if ($p > 0 && $p < 1) {
+            $s = "Correlação positiva";
+        }
+        return $s;
+    }
+
     public static function coPearson(array $x, array $y): float {
         $Sxx = $Syy = $Sxy = 0.0;
 
