@@ -155,7 +155,7 @@ class Math {
     public function testeHipoteseRegressao(): float {
         $b1 = $this->getB1();
         $est = $this->estimativaVariancia();
-        $t0 = $b1 / sqrt($est / $this->sxx);
+        $t0 = $b1 / sqrt($est / $this->Sxx);
         return abs($t0);
     }
 
