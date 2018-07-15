@@ -47,17 +47,17 @@ class Math {
     }
 
     public static function getSyy(array $y): float {
-        $Syy = 0;
         $n = count($y);
+
+        $sum1 = 0;
+        $sum2 = 0;
+
         for ($i = 0; $i < $n; $i++) {
-            $sum = 0;
-
-            for ($j = 0; $j < $n; $j++) {
-                $sum += floatval($y[$j]);
-            }
-
-            $Syy += floatval(pow($y[$i], 2) - (pow($sum, 2) / $n));
+            $sum1 += floatval(pow($y[$i], 2));
+            $sum2 += floatval($y[$i]);
         }
+
+        $Syy = floatval($sum1 - (pow($sum2, 2) / $n));
 
         return $Syy;
     }
@@ -67,33 +67,34 @@ class Math {
             echo "BASE DE DADOS COM TAMANHO DIFERENTE";
             return 0; // erro
         }
-        $Sxy = 0;
         $n = count($x);
-        for ($i = 0; $i < $n; $i++) {
-            $sumX = 0;
-            $sumY = 0;
-            for ($j = 0; $j < $n; $j++) {
-                $sumX += floatval($x[$j]);
-                $sumY += floatval($y[$j]);
-            }
 
-            $Sxy += floatval($x[$i] * $y[$i] - ($sumX * $sumY / $n));
+        $sum1 = 0;
+        $sumx = 0;
+        $sumy = 0;
+        for ($i = 0; $i < $n; $i++) {
+            $sum1 += floatval($x[$i] * $y[$i]);
+
+            $sumx += floatval($x[$i]);
+            $sumy += floatval($y[$i]);
         }
+
+        $Sxy = $sum1 - ($sumx * $sumy / $n);
         return $Sxy;
     }
 
     public static function getSxx(array $x): float {
         $n = count($x);
-        $Sxx = 0;
+
+        $sum1 = 0;
+        $sum2 = 0;
+
         for ($i = 0; $i < $n; $i++) {
-            $sum = 0;
-
-            for ($j = 0; $j < $n; $j++) {
-                $sum += floatval($x[$j]);
-            }
-
-            $Sxx += floatval(pow($x[$i], 2) - (pow($sum, 2) / $n));
+            $sum1 += floatval(pow($x[$i], 2));
+            $sum2 += floatval($x[$i]);
         }
+
+        $Sxx = floatval($sum1 - (pow($sum2, 2) / $n));
 
         return $Sxx;
     }
@@ -155,7 +156,8 @@ class Math {
     public function testeHipoteseRegressao(): float {
         $b1 = $this->getB1();
         $est = $this->estimativaVariancia();
-        $t0 = $b1 / sqrt($est / $this->Sxx);
+        $den = sqrt($est / $this->Sxx);
+        $t0 = $b1 / $den;
         return abs($t0);
     }
 
