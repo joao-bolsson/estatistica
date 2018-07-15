@@ -20,8 +20,8 @@ for ($i = 1; $i < $size; $i++) {
 
     $n = count($line);
     for ($j = 0; $j < $n; $j++) {
-        $x[$index] = $line[0];
-        $y[$index] = $line[1];
+        $x[$index] = $line[0]; // propaganda
+        $y[$index] = $line[1]; // retorno
         $index++;
     }
 
@@ -30,6 +30,13 @@ for ($i = 1; $i < $size; $i++) {
 echo "=================<br>1) <br>";
 
 $p = Math::coPearson($x, $y);
-echo "p: " . $p . " -> " . Math::interpretaCoPearson($p);
+echo "p: " . $p . " -> " . Math::interpretaCoPearson($p) . "<br>";
+
+echo "=================<br>2) <br>";
+
+$b0 = Math::getB0($x, $y);
+$b1 = Math::getB1($x, $y);
+
+echo "b0: " . $b0 . " | b1: " . $b1 . "<br>";
 
 
