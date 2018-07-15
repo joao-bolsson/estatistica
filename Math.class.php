@@ -124,4 +124,19 @@ class Math {
         return $b0;
     }
 
+    public static function estimativaVariancia(array $x, array $y) {
+        if (count($y) !== count($x)) {
+            echo "ARRAYS COM TAMANHOS DIFERENTES";
+            return 0; // erro
+        }
+        $n = count($x);
+
+        $sum = 0;
+        for ($i = 0; $i < $n; $i++) {
+            $sum += floatval(pow($y[$i] - self::estimadorMinQuad($y, $x, $i), 2));
+        }
+        $est = (1 / ($n - 2)) * $sum;
+        return $est;
+    }
+
 }
