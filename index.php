@@ -65,6 +65,7 @@ $math = new Math($x, $y);
 echo "=================<br>5) <br>";
 $p = $math->coPearson();
 echo "p: " . $p . " -> " . Math::interpretaCoPearson($p) . "<br>";
+echo "sim, como ele tem correlaçao positiva, a medida que a quilometragem aumenta, a quantidade de combustível aumenta também";
 
 echo "=================<br>6) <br>";
 

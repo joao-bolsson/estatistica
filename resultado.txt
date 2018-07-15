@@ -1,0 +1,12 @@
+=================
+1)
+p: 0.95 -> Correlação positiva
+=================
+2)
+b0: 14661.608109091 | b1: 24.304624212121 | t0 (teste de hipotese): 42.157330105411
+=================
+5)
+p: 0.89 -> Correlação positiva
+sim, como ele tem correlaçao positiva, a medida que a quilometragem aumenta, a quantidade de combustível aumenta também=================
+6)
+b0: 4.8593051897291 | b1: 0.084169552433107 | t0 (teste de hipotese): 152.13658908516
